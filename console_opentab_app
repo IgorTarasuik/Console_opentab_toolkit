@@ -1,0 +1,85 @@
+using System;
+
+namespace ConsoleApp1
+{
+    class Entry
+    {
+        public string url;
+        public string name;
+        public string key; 
+
+        public Entry(string newUrl, string newName, string newKey)
+        {
+            url = newUrl;
+            name = newName;
+            key = newKey;
+        }
+    }
+    class Program
+    {
+        static void Main(string[] args)
+        {
+
+            Entry[] entries = new Entry[]
+            {
+                new Entry("www.google.com", "Google","g"),
+                new Entry("www.facebook.com", "Facebook","f"),
+                new Entry("www.youtube.com","Youtube","y")
+            };
+            
+
+            Console.WriteLine("Enter the key and press enter!");
+            Console.WriteLine("Options:");
+
+            foreach(Entry entry in entries)
+            {
+                Console.WriteLine("\t " + entry.key + " " + entry.name); 
+            }
+
+            Console.WriteLine("\nYour Option?");
+
+            string userInput = Console.ReadLine().ToLower();
+            bool foundEntry = false;
+
+            foreach (Entry entry in entries)
+            {
+                if(userInput == entry.key)
+                {
+                    System.Diagnostics.Process.Start(@"C:\Program Files (x86)\Google\Chrome\Application\chrome.exe", entry.url);
+                    foundEntry = true;
+                    RestartApp();
+                }
+            };
+
+             if (userInput == "1")
+            {
+                foreach (Entry entry in entries)
+                {
+                    System.Diagnostics.Process.Start(@"C:\Program Files (x86)\Google\Chrome\Application\chrome.exe", entry.url);
+                }
+                foundEntry = true;
+                RestartApp();
+            }
+          
+             
+            
+          if(foundEntry == false)
+            {
+                Console.WriteLine("\nCan't find a valid entry. Please enter y to try again");
+                
+                string choice = Console.ReadLine();
+                if(choice == "y")
+                {
+                    RestartApp();
+                }
+            }
+            Console.Read(); 
+        }
+        static void RestartApp()
+        {
+            Console.Clear();
+            Main(null); 
+        }
+    }
+
+}
